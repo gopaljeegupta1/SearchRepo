@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">SearchRepo</string>
+
+    <string name="retry">Retry</string>
+    <string name="results_error">Results could not be loaded</string>
+    <string name="search">Search</string>
+<!--    <string name="query">language:%s</string>-->
+    <string name="query">%s</string>
+    <string name="description">Description</string>
+    <string name="open_browser">Open in Browser</string>
+    <string name="created_on">Created on:</string>
+    <string name="last_update">Last updated on:</string>
+    <string name="opened_issues">Opened issues:</string>
+    <string name="no_results_found">No results found for this query</string>
+    <string name="search_query">%s</string>
+
+    <string name="no_repo_found">No repos found</string>
+    <string name="fetching">Fetching..</string>
+    <string name="project_link">Project Link</string>
+    <string name="Description">Description</string>
+    <string name="Others">Others</string>
+    <string name="name">Name</string>
+    <string name="Username">UserName</string>
+    <string name="contributors">Contributors</string>
+    <string name="repositories">Repositories</string>
+    <string name="click_here">Click here to open</string>
+    <string name="filters">Filters</string>
+    <string name="stars">Stars</string>
+    <string name="forks">Forks</string>
+    <string name="updated">Last updated</string>
+    <string name="apply">Apply</string>
+    <string name="sort_by">Sort By</string>
+    <string name="order_by">Order by</string>
+    <string name="ascending">Ascending</string>
+    <string name="descending">Descending</string>
+    <string name="clear">Clear</string>
+    <string name="repo_details">Repo Details</string>
+    <string name="contributor_details">Contributor Details</string>
+    <string name="no_contributors">No Contributors</string>
+</resources>

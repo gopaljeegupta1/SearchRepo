@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context=".ui.repos.ReposFragment">
+
+    <EditText
+        android:id="@+id/editTextSearch"
+        android:layout_width="@dimen/sizeZero"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/sizeEight"
+        android:background="@drawable/drawable_edit_text_background"
+        android:ems="10"
+        android:hint="@string/search"
+        android:inputType="textPersonName"
+        android:paddingLeft="@dimen/sizeSixteen"
+        android:paddingTop="@dimen/sizeTen"
+        android:paddingRight="@dimen/sizeSixteen"
+        android:paddingBottom="@dimen/sizeTen"
+        android:textSize="@dimen/sizeSixteenSP"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageViewSearch"
+        android:layout_width="@dimen/sizeForty"
+        android:layout_height="@dimen/sizeForty"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="@dimen/sizeEight"
+        android:layout_marginEnd="@dimen/sizeTwo"
+        android:layout_marginRight="@dimen/sizeTwo"
+        android:background="@drawable/drawable_search_background"
+        android:padding="@dimen/sizeEight"
+        app:layout_constraintEnd_toEndOf="@+id/editTextSearch"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_search" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="@dimen/sizeZero"
+        android:layout_height="@dimen/sizeZero"
+        android:layout_marginTop="@dimen/sizeEight"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSearch"
+        tools:listitem="@layout/item_trending_repo" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="@string/results_error"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/btnRetry"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/btnRetry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/retry"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/emptyTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_results_found"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
