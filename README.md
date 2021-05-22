@@ -42,4 +42,5 @@ Build a mobile application using GitHub API to search through repositories. Sele
     <img style="margin-right: 10px;" src="/screenshots/4.jpeg">
 </div>
 
+<br/><br/>
 --- Don't forget to comments for more improvement ---
