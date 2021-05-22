@@ -26,8 +26,8 @@ Build a mobile application using GitHub API to search through repositories. Sele
   * ViewModel - UI related data holder, lifecycle aware.
   * Navigation Component - handle everything needed for in-app navigation.
   * Data Binding - declarative bind observable data to UI elements.
-  * Architecture
-      o   MVVM Architecture (View - DataBinding - ViewModel - Model)
+  * Architecture <br/>
+      o   MVVM Architecture (View - DataBinding - ViewModel - Model) <br/>
       o   Repository pattern
   * Glide - loading images.
   * Retrofit2 & OkHttp3 - construct the REST APIs and paging network data.
