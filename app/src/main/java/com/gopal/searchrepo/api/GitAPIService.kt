@@ -24,5 +24,5 @@ interface GitAPIService {
     ): List<Owner>
 
     @GET(Constants.GET_REPOS_BY_NAME)
-    fun getReposByName(@Path("ownerName") ownerName: String): List<Repo>
+    suspend fun getReposByName(@Path("ownerName") ownerName: String): List<Repo>
 }

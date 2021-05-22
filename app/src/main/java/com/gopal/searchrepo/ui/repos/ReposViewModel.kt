@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.gopal.searchrepo.data.GitRepository
+import com.gopal.searchrepo.api.GitRepository
 
-class ReposViewModel @ViewModelInject constructor (
+class ReposViewModel @ViewModelInject constructor(
     private val repository: GitRepository
 ) : ViewModel() {
 
@@ -23,8 +23,8 @@ class ReposViewModel @ViewModelInject constructor (
     }
 
     companion object {
-//        private const val DEFAULT_QUERY = "language:Kotlin"
         private const val DEFAULT_QUERY = "Kotlin"
+        //private const val DEFAULT_QUERY = "language:Kotlin"
     }
 
 }

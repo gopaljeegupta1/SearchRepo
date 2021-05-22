@@ -9,11 +9,9 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "owner")
 @Parcelize
 data class Owner(
-    /*val id: Int,
-    val login: String,
-    val avatar_url: String*/
+
     @PrimaryKey
-    @SerializedName("id") val id: Int,
+    @SerializedName("id") val id: Long,
     @SerializedName("login") val login: String,
     @SerializedName("avatar_url") val avatar_url: String,
     @SerializedName("node_id") val nodeId: String,

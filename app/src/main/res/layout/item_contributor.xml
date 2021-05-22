@@ -2,19 +2,18 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="4dp"
     app:cardElevation="2dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:padding="@dimen/sizeEight">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
 
         <ImageView
-            android:id="@+id/imageViewProfile"
+            android:id="@+id/avatar"
             android:layout_width="@dimen/sizeFifty"
             android:layout_height="@dimen/sizeFifty"
             android:layout_margin="@dimen/sizeEight"
@@ -26,7 +25,7 @@
             tools:src="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/textViewName"
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/sizeEight"
@@ -35,7 +34,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewProfile" />
+            app:layout_constraintTop_toBottomOf="@+id/avatar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

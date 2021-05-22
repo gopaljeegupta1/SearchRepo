@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.paging.LoadState
+import androidx.transition.TransitionInflater
 import com.gopal.searchrepo.R
 import com.gopal.searchrepo.databinding.FragmentReposBinding
 import com.gopal.searchrepo.ui.repos.adapter.ReposAdapter
@@ -18,9 +19,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class ReposFragment : Fragment(R.layout.fragment_repos) {
 
     private val viewModel by viewModels<ReposViewModel>()
-
     private var _binding: FragmentReposBinding? = null
     private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,7 +37,7 @@ class ReposFragment : Fragment(R.layout.fragment_repos) {
 
         binding.apply {
 
-            /*MANUALLY SAERCH*/
+            /*Default Search*/
             editTextSearch.let {
                 it.setText("Kotlin")
                 it.clearFocus()
@@ -61,15 +65,15 @@ class ReposFragment : Fragment(R.layout.fragment_repos) {
             btnRetry.setOnClickListener {
                 adapter.retry()
             }
-
-
         }
+
 
         /*api calling*/
         viewModel.repos.observe(viewLifecycleOwner) {
             adapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
 
+        /*bind loadMore data*/
         adapter.addLoadStateListener { loadState ->
             binding.apply {
                 progress.isVisible = loadState.source.refresh is LoadState.Loading
@@ -90,10 +94,9 @@ class ReposFragment : Fragment(R.layout.fragment_repos) {
             }
         }
 
-        setHasOptionsMenu(true)
     }
 
-    /*BINDING*/
+    /*BINDING search features*/
     private fun bindingSearchFeatures(queryString: String) {
         binding.recycler.scrollToPosition(0)
         val languageQuery = String.format(getString(R.string.query), queryString)
@@ -104,9 +107,6 @@ class ReposFragment : Fragment(R.layout.fragment_repos) {
         super.onDestroyView()
         _binding = null
     }
-
-
-
 
 
 }

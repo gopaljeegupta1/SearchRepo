@@ -23,8 +23,25 @@
         android:name="com.gopal.searchrepo.ui.details.DetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_details" >
+        <action
+            android:id="@+id/actionDetailsToProfile"
+            app:destination="@id/profilesFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <argument
             android:name="repo"
             app:argType="com.gopal.searchrepo.data.model.Repo" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/profilesFragment"
+        android:name="com.gopal.searchrepo.ui.profiles.ProfilesFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profiles" >
+        <argument
+            android:name="details"
+            app:argType="com.gopal.searchrepo.data.model.Owner" />
     </fragment>
 </navigation>

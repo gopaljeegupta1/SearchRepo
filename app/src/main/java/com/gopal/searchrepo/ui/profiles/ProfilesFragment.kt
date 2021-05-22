@@ -1,34 +1,30 @@
-package com.gopal.searchrepo.ui.details
+package com.gopal.searchrepo.ui.profiles
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
 import androidx.transition.TransitionInflater
 import com.bumptech.glide.Glide
 import com.gopal.searchrepo.R
-import com.gopal.searchrepo.databinding.FragmentDetailsBinding
-import com.gopal.searchrepo.internal.DateUtils
-import com.gopal.searchrepo.ui.details.adapter.DetailsAdapter
+import com.gopal.searchrepo.databinding.FragmentProfilesBinding
 import com.gopal.searchrepo.ui.details.adapter.DetailsLoadStateAdapter
+import com.gopal.searchrepo.ui.profiles.adapter.ProfilesAdapter
+import com.gopal.searchrepo.ui.profiles.adapter.ProfilesLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DetailsFragment : Fragment(R.layout.fragment_details) {
+class ProfilesFragment : Fragment(R.layout.fragment_profiles) {
 
-    private val viewModel by viewModels<DetailsViewModel>()
-    private var _binding: FragmentDetailsBinding? = null
+    private val viewModel by viewModels<ProfilesViewModel>()
+    private var _binding: FragmentProfilesBinding? = null
     private val binding get() = _binding!!
-    private val args: DetailsFragmentArgs by navArgs()
+    private val args: ProfilesFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,44 +37,32 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        _binding = FragmentDetailsBinding.bind(view)
+        _binding = FragmentProfilesBinding.bind(view)
 
-        val adapter = DetailsAdapter()
+        val adapter = ProfilesAdapter()
 
         binding.apply {
-            name.text = args.repo.name
-            username.text = args.repo.owner.login
-            description.text = args.repo.description
+//            name.text = args.repo.name
+            username.text = args.details.login
+//            description.text = args.repo.description
 
             /*img loading*/
             avatar.apply {
-                transitionName = args.repo.owner.avatar_url
+                transitionName = args.details.avatar_url
                 Glide.with(view)
-                    .load(args.repo.owner.avatar_url)
+                    .load(args.details.avatar_url)
                     .error(android.R.drawable.stat_notify_error)
                     .into(this)
             }
 
-            stars.text = args.repo.stars.toString()
-            forks.text = args.repo.forks.toString()
-            watchers.text = args.repo.watchers.toString()
-            issuesOpened.text = args.repo.openIssues.toString()
-            createDate.text = DateUtils.formatDate(args.repo.createDate)
-            updateDate.text = DateUtils.formatDate(args.repo.updateDate)
-
-            viewLink.text = args.repo.url
-            btnBrowse.setOnClickListener {
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(args.repo.url))
-                startActivity(browserIntent)
-            }
 
             /*bind recycle view*/
-            recyclerContributor.apply {
+            recyclerRepository.apply {
                 setHasFixedSize(true)
                 itemAnimator = null
                 this.adapter = adapter.withLoadStateHeaderAndFooter(
-                    header = DetailsLoadStateAdapter { adapter.retry() },
-                    footer = DetailsLoadStateAdapter { adapter.retry() }
+                    header = ProfilesLoadStateAdapter { adapter.retry() },
+                    footer = ProfilesLoadStateAdapter { adapter.retry() }
                 )
                 postponeEnterTransition()
                 viewTreeObserver.addOnPreDrawListener {
@@ -92,10 +76,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
             }
         }
 
-        ViewCompat.setTransitionName(binding.avatar, "avatar_${args.repo.id}")
+        ViewCompat.setTransitionName(binding.avatar, "avatar_${args.details.id}")
 
         /*api calling*/
-        viewModel.searchContributor(args.repo.owner.login, args.repo.name)
+        viewModel.searchContributor(args.details.login)
         viewModel.repos.observe(viewLifecycleOwner) {
             adapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
@@ -104,7 +88,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         adapter.addLoadStateListener { loadState ->
             binding.apply {
                 progress.isVisible = loadState.source.refresh is LoadState.Loading
-                recyclerContributor.isVisible = loadState.source.refresh is LoadState.NotLoading
+                recyclerRepository.isVisible = loadState.source.refresh is LoadState.NotLoading
                 btnRetry.isVisible = loadState.source.refresh is LoadState.Error
                 error.isVisible = loadState.source.refresh is LoadState.Error
 
@@ -113,7 +97,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                     loadState.append.endOfPaginationReached &&
                     adapter.itemCount < 1
                 ) {
-                    recyclerContributor.isVisible = false
+                    recyclerRepository.isVisible = false
                     emptyTv.isVisible = true
                 } else {
                     emptyTv.isVisible = false

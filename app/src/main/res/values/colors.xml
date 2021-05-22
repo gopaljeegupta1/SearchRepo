@@ -9,7 +9,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <!--for others-->
-    <color name="colorBackground">#e4e4e2</color>
+    <color name="colorBackground">#FF018786</color>
+<!--    <color name="colorBackground">#e4e4e2</color>-->
     <color name="colorDescription">#838381</color>
     <color name="colorPrimary">#1D353C</color>
     <color name="colorPrimaryDark">#1B292E</color>

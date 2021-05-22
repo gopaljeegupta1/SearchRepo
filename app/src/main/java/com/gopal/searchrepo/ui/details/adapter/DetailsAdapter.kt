@@ -1,4 +1,4 @@
-package com.gopal.searchrepo.ui.repos.adapter
+package com.gopal.searchrepo.ui.details.adapter
 
 import android.graphics.Typeface
 import android.text.Spannable
@@ -8,80 +8,82 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.gopal.searchrepo.data.model.Owner
 import com.gopal.searchrepo.data.model.Repo
-import com.gopal.searchrepo.databinding.ItemRepoBinding
-import com.gopal.searchrepo.ui.repos.ReposFragmentDirections
+import com.gopal.searchrepo.databinding.ItemContributorBinding
+import com.gopal.searchrepo.ui.details.DetailsFragmentDirections
 
-class ReposAdapter : PagingDataAdapter<Repo, ReposAdapter.ViewHolder>(REPO_COMPARATOR) {
+class DetailsAdapter : PagingDataAdapter<Owner, DetailsAdapter.ViewHolder>(REPO_COMPARATOR) {
 
     companion object {
-        private val REPO_COMPARATOR = object : DiffUtil.ItemCallback<Repo>() {
-            override fun areItemsTheSame(oldRepo: Repo, newRepo: Repo) = oldRepo.id == newRepo.id
+        private val REPO_COMPARATOR = object : DiffUtil.ItemCallback<Owner>() {
+            override fun areItemsTheSame(oldRepo: Owner, newRepo: Owner) = oldRepo.id == newRepo.id
 
-            override fun areContentsTheSame(oldRepo: Repo, newRepo: Repo) = oldRepo == newRepo
+            override fun areContentsTheSame(oldRepo: Owner, newRepo: Owner) = oldRepo == newRepo
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemRepoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemContributorBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        getItem(position).let { repo ->
+        getItem(position).let { owner ->
             with(holder) {
-                itemView.tag = repo
-                if (repo != null) {
-                    bind(createOnClickListener(binding, repo), repo)
+                itemView.tag = owner
+                if (owner != null) {
+                    bind(createOnClickListener(binding, owner), owner)
                 }
             }
         }
     }
 
     private fun createOnClickListener(
-        binding: ItemRepoBinding,
-        repo: Repo
+        binding: ItemContributorBinding,
+        owner: Owner
     ): View.OnClickListener {
         return View.OnClickListener {
-            val directions = ReposFragmentDirections.actionReposToDetails(repo)
+            val directions = DetailsFragmentDirections.actionDetailsToProfile(owner)
             val extras = FragmentNavigatorExtras(
-                binding.avatar to "avatar_${repo.id}"
+                binding.avatar to "avatars_${owner.id}"
             )
             it.findNavController().navigate(directions, extras)
         }
     }
 
-    class ViewHolder(val binding: ItemRepoBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(listener: View.OnClickListener, repo: Repo) {
+    class ViewHolder(val binding: ItemContributorBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(listener: View.OnClickListener, owner: Owner) {
 
             binding.apply {
 
                 /*image loading*/
                 Glide.with(itemView)
-                    .load(repo.owner.avatar_url)
+                    .load(owner.avatar_url)
                     .centerCrop()
                     .error(android.R.drawable.stat_notify_error)
                     .into(avatar)
 
-                val str = SpannableString(repo.owner.login + " / " + repo.name)
+                val str = SpannableString(owner.login)
                 str.setSpan(
                     StyleSpan(Typeface.BOLD),
-                    repo.owner.login.length,
+                    owner.login.length,
                     str.length,
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
                 name.text = str
-                description.text = repo.description
-                language.text = repo.language
 
-                ViewCompat.setTransitionName(this.avatar, "avatar_${repo.id}")
+                ViewCompat.setTransitionName(this.avatar, "avatar_${owner.id}")
 
                 root.setOnClickListener(listener)
             }

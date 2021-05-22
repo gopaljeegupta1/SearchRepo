@@ -1,25 +1,24 @@
-package com.gopal.searchrepo.ui.details
+package com.gopal.searchrepo.ui.profiles
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import androidx.paging.cachedIn
 import com.gopal.searchrepo.api.GitRepository
 
-class DetailsViewModel @ViewModelInject constructor(
+class ProfilesViewModel @ViewModelInject constructor(
     private val repository: GitRepository
 ) : ViewModel() {
 
-    private val _res = MutableLiveData<List<String>>()
-    val res: LiveData<List<String>>
+    private val _res = MutableLiveData<String>()
+    val res: LiveData<String>
         get() = _res
 
     val repos = _res.switchMap { queryString ->
-        repository.getContributorResults(queryString).cachedIn(viewModelScope)
+        repository.getRepositoryResults(queryString).cachedIn(viewModelScope)
     }
 
-    fun searchContributor(ownerName: String, repoName: String) {
-        var list: List<String> = mutableListOf(ownerName, repoName)
-        _res.value = list
+    fun searchContributor(ownerName: String) {
+        _res.value = ownerName
     }
 
 
